@@ -8,11 +8,12 @@ import numpy as np
 import rospy
 from sensor_msgs.msg import Image, LaserScan
 from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
+from std_msgs.msg import Float32
 
 # PID CONTROL PARAMS
-kp =  # TODO
-kd =  # TODO
-ki =  # TODO
+kp =  2 # ~TODO~
+kd =  0 # ~TODO~
+ki =  0.2 # ~TODO~
 servo_offset = 0.0
 prev_error = 0.0
 error = 0.0
@@ -35,8 +36,11 @@ class WallFollow:
         lidarscan_topic = '/scan'
         drive_topic = '/nav'
 
-        self.lidar_sub =  # TODO: Subscribe to LIDAR
-        self.drive_pub =  # TODO: Publish to drive
+        self.lidar_sub =  rospy.Subscriber('scan', LaserScan, lidar_callback) # ~TODO~: Subscribe to LIDAR
+        self.drive_pub =  rospy.Publisher('nav', Float32, queue_size=1)# ~TODO~: Publish to drive
+
+    def manual_outpu(self):
+        self.drive_pub.publish(0.0, 2.0)
 
     def getRange(self, data, angle):
         # data: single message from topic /scan

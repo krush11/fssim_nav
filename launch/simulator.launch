@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Listen to messages from joysicks -->
-  <node pkg="joy" name="joy_node" type="joy_node"/>
+  <!-- <node pkg="joy" name="joy_node" type="joy_node"/> -->
 
   <!-- Launch a map from the maps folder-->
-  <arg name="map" default="$(find f1tenth_simulator)/maps/berlin.yaml"/>
+  <arg name="map" default="$(find f1tenth_simulator)/maps/levine.yaml"/>
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map)"/>
 
   <!-- Launch the racecar model -->
@@ -35,17 +35,24 @@
     <rosparam command="load" file="$(find f1tenth_simulator)/params.yaml"/>
   </node>
 
-  <node pkg="f1tenth_simulator" name="WallFollow_node" type="WallFollow_node.py" output="screen">
+  <!-- <node pkg="f1tenth_simulator" name="WallFollow_node" type="WallFollow_node.py" output="screen">
+    <rosparam command="load" file="$(find f1tenth_simulator)/params.yaml"/>
+  </node> -->
+
+  <node name = "pid_wall_follower" pkg = "f1tenth_simulator" type = "pid_error.py" output = "screen">
     <rosparam command="load" file="$(find f1tenth_simulator)/params.yaml"/>
   </node>
 
+  <node name = "heading_generator" pkg = "f1tenth_simulator" type = "control.py">
+    <rosparam command="load" file="$(find f1tenth_simulator)/params.yaml"/>
+  </node>
   <!-- ***Put launch command for new planner here:-->
   <!-- Launch the New Planner Node -->
   <!--   <node pkg="f1tenth_simulator" name="new node's name" type="new file name" output="screen">
           <rosparam command="load" file="$(find f1tenth_simulator)/params.yaml"/>
   	 </node>    -->
 
-  
+
   <!-- Launch RVIZ -->
-    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find f1tenth_simulator)/launch/simulator.rviz" output="screen"/>
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find f1tenth_simulator)/launch/simulator.rviz" output="screen"/>
 </launch>
