@@ -43,7 +43,7 @@
     <rosparam command="load" file="$(find f1tenth_simulator)/params.yaml"/>
   </node>
 
-  <node name = "heading_generator" pkg = "f1tenth_simulator" type = "control.py">
+  <node name = "heading_generator" pkg = "f1tenth_simulator" type = "control.py" output = "screen">
     <rosparam command="load" file="$(find f1tenth_simulator)/params.yaml"/>
   </node>
   <!-- ***Put launch command for new planner here:-->

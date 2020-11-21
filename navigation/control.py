@@ -1,8 +1,4 @@
 #!/usr/bin/env python
-'''
-2018 Varundev Suresh Babu (University of Virginia)
-                MIT License
-'''
 
 import rospy
 from geometry_msgs.msg import Twist
@@ -10,7 +6,7 @@ from f1tenth_simulator.msg import PIDInput
 import math
 import numpy as np
 
-pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
+pub = rospy.Publisher('nav', Twist, queue_size=1)
 
 kp = 10.
 kd = 0.01
