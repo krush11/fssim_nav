@@ -45,6 +45,7 @@ if(DEFINED CATKIN_DEVEL_PREFIX)
   find_package(catkin REQUIRED COMPONENTS
     roslib
     roscpp
+    rospy
     tf2
     tf2_ros
     tf2_geometry_msgs
@@ -52,23 +53,23 @@ if(DEFINED CATKIN_DEVEL_PREFIX)
     nav_msgs
     sensor_msgs
     geometry_msgs
-
     interactive_markers
     visualization_msgs
-
     std_msgs
     message_generation
-    )
+  )
+  
+	add_message_files(
+		FILES
+    PIDInput.msg
+	)
 
   generate_messages(
     DEPENDENCIES
     std_msgs
     nav_msgs
     sensor_msgs
-    )
-
-
-
+  )
 
   # Include catkin_libraries
   catkin_package(
@@ -78,9 +79,6 @@ if(DEFINED CATKIN_DEVEL_PREFIX)
   )
   set(LIBS ${LIBS} ${catkin_LIBRARIES})
   include_directories(include ${catkin_INCLUDE_DIRS})
-
-
-  
 
   # Add the nodes
   file(GLOB NODE_SRC_FILES node/*.cpp)
