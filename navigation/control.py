@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import rospy
 from geometry_msgs.msg import Twist
-from f1tenth_simulator.msg import PIDInput
+from f1tenth_simulator import PIDInput
 import math
 import numpy as np
 

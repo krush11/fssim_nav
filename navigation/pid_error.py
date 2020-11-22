@@ -1,11 +1,12 @@
 #! /usr/bin/env python3
+
 import rospy
 import math
 import numpy as np
 import yaml
 import sys
 from sensor_msgs.msg import LaserScan
-from f1tenth_simulator.msg import PIDInput
+from f1tenth_simulator import PIDInput
 import pdb
 
 ANGLE_RANGE = 270 # Hokuyo 10LX has 270 degrees scan
@@ -15,6 +16,11 @@ VELOCITY = 1.00 # meters per second
 CAR_LENGTH = 0.50 # Traxxas Rally is 20 inches or 0.5 meters
 
 pub = rospy.Publisher('error', PIDInput, queue_size=10)
+
+alpha = 0
+error = 0
+final_direction = 0
+prev_direction = 0
 
 def getRange(data, angle):
 	# data: single message from topic /scan

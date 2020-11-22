@@ -2,7 +2,7 @@
 import rospy
 import math
 from sensor_msgs.msg import LaserScan
-from simulator.msg import PIDInput
+from f1tenth_simulator import PIDInput
 import numpy as np
 #import matplotlib.pyplot as plt
 
@@ -23,6 +23,8 @@ error = 0.0
 alpha = 0.0
 final_desired_trajectory = -1
 final_direction = 1
+prev_direction = 0
+flag_obstacle = 0
 
 left_dist = []
 objbuffer = [-1]*25
@@ -318,11 +320,11 @@ def decideReturn(start_point,end_point):
 def callback(data):
 	global error
 	global alpha
-	print " "
+	print (" ")
 	global flag_obstacle
 	global final_desired_trajectory
 	global final_direction
-	global prev_direction
+	global prev_direction 
 	global flag_left
 #	a = getRange(data,50)
 #	b = getRange(data,0)
