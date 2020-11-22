@@ -72,14 +72,14 @@ def obs_decide(data):
 	start_point = 0
 	end_point = 0
 	#Detects if its a clear path
-	print "Num Points", num_points
+	print ("Num Points", num_points)
 
 	if num_points < 3:
-		print "Go go go - clear path"
+		print ("Go go go - clear path")
 		return -1,-1
 	#Detects if there is an obstacle
 	elif num_points <= 15:
-		print "normal obstacle"
+		print ("normal obstacle")
 		k =-1
 		for i in values:
 			k = k + 1
@@ -94,12 +94,12 @@ def obs_decide(data):
 				break
 		#if the obstacle covers the previous any one of previous limits, expand the range
 		if start_point <= (start+1):
-			print "Start point extended"
+			print ("Start point extended")
 			start1 = start - 10
 			end1 = start
 			start_point = start1
 			values,num_points = obs_particles(data,start1,end1,distance)
-			print "Right extended", values
+			print ("Right extended", values)
 			k = 0
 			for i in reversed(values):
 				k = k + 1
@@ -112,7 +112,7 @@ def obs_decide(data):
 			end2 = end + 10
 			end_point = end2
 			values,num_points = obs_particles(data,start2,end2,distance)
-			print "Right extended", values
+			print ("Right extended", values)
 			k = len(values)-1
 			for i in values:
 				k = k-1
@@ -120,12 +120,12 @@ def obs_decide(data):
 					end_point = end2 - k
 					break
 
-		print "Start Point", start_point
-		print "End Point", end_point
+		print ("Start Point", start_point)
+		print ("End Point", end_point)
 		return start_point,end_point
 
 	else:
-		print "wide obstacle"
+		print ("wide obstacle")
 		#Looks like a wide obstacle or wall. Start from expanded range
 		start1 = start - 10
 		end1 = start - 1
@@ -152,14 +152,14 @@ def obs_decide(data):
 				break
 
 		#Looks like a wall if following conditions satisfy
-		print "wall"
+		print ("wall")
 		if start_point <= start1+1:
 			start_point = -1
 		if end_point >= end2-1:
 			end_point = -1
 
-		print "Start Point", start_point
-		print "End Point", end_point
+		print ("Start Point", start_point)
+		print ("End Point", end_point)
 
 		return start_point,end_point
 
@@ -182,13 +182,13 @@ def decide_obstacle_direction(data,start_point,end_point):
 		start_pointdistance = laser_start*math.cos(math.radians(start_point))
 		end_pointdistance = laser_end*math.cos(math.radians(end_point))
 
-		print "Right Width",start_pointdistance
-		print "left Width",end_pointdistance
+		print ("Right Width",start_pointdistance)
+		print ("left Width",end_pointdistance)
 		car_dist_right = getRange(data,0)*math.cos(alpha)
 		car_dist_left = getRange(data,179)*math.cos(alpha)
 
-		print "Car dist right",car_dist_right
-		print "Car dist left",car_dist_left
+		print ("Car dist right",car_dist_right)
+		print ("Car dist left",car_dist_left)
 
 		obstacle_distance_left = 0.0
 		obstacle_distance_right = 0.0
@@ -203,20 +203,20 @@ def decide_obstacle_direction(data,start_point,end_point):
 		# else:
 		obstacle_distance_left = car_dist_left + end_pointdistance
 
-		print "Right edge",obstacle_distance_right
-		print "left edge",obstacle_distance_left
+		print ("Right edge",obstacle_distance_right)
+		print ("left edge",obstacle_distance_left)
 
 		if (obstacle_distance_left > obstacle_distance_right):# and obstacle_distance_left > 0.4:
 			desired_trajectory = obstacle_distance_left/2
 			direction =left
 
-			print "left"
+			print ("left")
 
 		elif (obstacle_distance_left < obstacle_distance_right):# and obstacle_distance_right > 0.4:
 			desired_trajectory = obstacle_distance_right/2
 			direction =right
 
-			print "right"
+			print ("right")
 
 		else:
 			direction = stop
@@ -224,15 +224,15 @@ def decide_obstacle_direction(data,start_point,end_point):
 		desired_trajectory = -1
 		direction = centre
 
-		print "Go centre"
+		print ("Go centre")
 
 	desired_trajectory = -1
 	direction = centre
 
-	print "Go centre"
+	print ("Go centre")
 
 
-	print "Desired dist", desired_trajectory
+	print ("Desired dist", desired_trajectory)
 	return desired_trajectory, direction
 
 def followRight(data,desired_trajectory):
@@ -242,15 +242,15 @@ def followRight(data,desired_trajectory):
 	b = getRange(data,45)
 	swing = math.radians(50)
 	alpha = math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-	print "a","b", a, b
-	print "Alpha right",math.degrees(alpha)
+	print ("a","b", a, b)
+	print ("Alpha right",math.degrees(alpha))
 	curr_dist = b*math.cos(alpha)
 
 	future_dist = curr_dist+car_length*math.sin(alpha)
 
-	print "Right : ",future_dist
+	print ("Right : ",future_dist)
 	error = desired_trajectory - future_dist
-	print "Error : ",error
+	print ("Error : ",error)
 	return error, curr_dist
 
 def followLeft(data,desired_trajectory):
@@ -259,13 +259,13 @@ def followLeft(data,desired_trajectory):
 	a = getRange(data,175)
 	b = getRange(data,225)
 	swing = math.radians(50)
-	print "a","b", a, b
+	print ("a","b", a, b)
 	alpha = -math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-	print "Alpha left",math.degrees(alpha)
+	print ("Alpha left",math.degrees(alpha))
 	curr_dist = b*math.cos(alpha)
 	future_dist = curr_dist-car_length*math.sin(alpha)
 
-	print "Left : ",future_dist
+	print ("Left : ",future_dist)
 
 	error = future_dist - desired_trajectory
 	return error, curr_dist
@@ -277,9 +277,9 @@ def followCentre(data,desired_trajectory):
 	a = getRange(data,175)
 	b = getRange(data,225)
 	swing = math.radians(50)
-	print "center distances: ", a, b
+	print ("center distances: ", a, b)
 	alpha = -math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-	print "Alpha left",math.degrees(alpha)
+	print ("Alpha left",math.degrees(alpha))
 	curr_dist1 = b*math.cos(alpha)
 	future_dist1 = curr_dist1-car_length*math.sin(alpha)
 
@@ -289,18 +289,18 @@ def followCentre(data,desired_trajectory):
 	b = getRange(data,45)
 	swing = math.radians(50)
 	alpha = math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-	print "Alpha right",math.degrees(alpha)
+	print ("Alpha right",math.degrees(alpha))
 	curr_dist2 = b*math.cos(alpha)
 
 	future_dist2 = curr_dist2+car_length*math.sin(alpha)
 
 	desired_trajectory = (future_dist1 + future_dist2)/2
 
-	print "dist 1 : ",future_dist1
-	print "dist 2 : ",future_dist2
+	print ("dist 1 : ",future_dist1)
+	print ("dist 2 : ",future_dist2)
 	# print "dist : ",future_dist
 	error = future_dist1 - future_dist2
-	print "Error : ",error
+	print ("Error : ",error)
 	return error, curr_dist2-curr_dist1
 
 
@@ -372,18 +372,18 @@ def callback(data):
 	# error_center, curr_dist_center = followCentre(data,1.)
 	if curr_dist_right >= curr_dist_left:
 		error = error_left
-		print 'Following Left'
-		print 'Error', error
+		print ('Following Left')
+		print ('Error', error)
 	else:
 		# error = followRight(data,final_desired_trajectory)
 		error = error_right
-		print 'Following Right'
-		print 'Error', error
+		print ('Following Right')
+		print ('Error', error)
 
 	# if curr_dist_center:
 
 
-	print 'Is error same?', error
+	print ('Is error same?', error)
 	msg = PIDInput()
 	msg.pid_error = error
 	msg.pid_vel = vel

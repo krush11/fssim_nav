@@ -40,15 +40,15 @@ def followRight(data, desired_trajectory):
 	b = getRange(data,0)
 	swing = math.radians(60)
 	alpha = math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-	print "a","b", a, b
-	print "Alpha right",math.degrees(alpha)
+	print ("a","b", a, b)
+	print ("Alpha right",math.degrees(alpha))
 	curr_dist = b*math.cos(alpha)
 
 	future_dist = curr_dist + CAR_LENGTH * math.sin(alpha)
-	print "Right : ",future_dist
+	print ("Right : ",future_dist)
 	error = desired_trajectory - future_dist
 
-	print "Current Distance Right: ", curr_dist
+	print ("Current Distance Right: ", curr_dist)
 	return error, curr_dist
 
 def followLeft(data, desired_trajectory):
@@ -59,16 +59,16 @@ def followLeft(data, desired_trajectory):
 	a = getRange(data,120)
 	b = getRange(data,179.9)
 	swing = math.radians(60)
-	print "a","b", a, b
+	print ("a","b", a, b)
 	alpha = -math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-	print "Alpha left",math.degrees(alpha)
+	print ("Alpha left",math.degrees(alpha))
 	curr_dist = b*math.cos(alpha)
 
 	future_dist = curr_dist - CAR_LENGTH * math.sin(alpha)
-	print "Left : ",future_dist
+	print ("Left : ",future_dist)
 	error = future_dist - desired_trajectory
 
-	print "Current Distance Left: ", curr_dist
+	print ("Current Distance Left: ", curr_dist)
 	return error, curr_dist
 
 def followCenter(data):
@@ -78,9 +78,9 @@ def followCenter(data):
 	a = getRange(data,120)
 	b = getRange(data,179.9)
 	swing = math.radians(60)
-	print "center distances: ", a, b
+	print ("center distances: ", a, b)
 	alpha = -math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-	print "Alpha left",math.degrees(alpha)
+	print ("Alpha left",math.degrees(alpha))
 	curr_dist1 = b*math.cos(alpha)
 	future_dist1 = curr_dist1-CAR_LENGTH*math.sin(alpha)
 
@@ -88,15 +88,15 @@ def followCenter(data):
 	b = getRange(data,0)
 	swing = math.radians(60)
 	alpha = math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-	print "Alpha right",math.degrees(alpha)
+	print ("Alpha right",math.degrees(alpha))
 	curr_dist2 = b*math.cos(alpha)
 	future_dist2 = curr_dist2+CAR_LENGTH*math.sin(alpha)
 
-	print "dist 1 : ",future_dist1
-	print "dist 2 : ",future_dist2
+	print ("dist 1 : ",future_dist1)
+	print ("dist 2 : ",future_dist2)
 
 	error = future_dist1 - future_dist2
-	print "Error : ",error
+	print ("Error : ",error)
 	return error, curr_dist2 - curr_dist1
 
 def callback(data):
@@ -105,7 +105,7 @@ def callback(data):
 	global final_direction
 	global prev_direction
 
-	print " "
+	print (" ")
 
 	# Does a left wall follow
 	error_left, curr_dist_left = followLeft(data, DESIRED_DISTANCE_LEFT)

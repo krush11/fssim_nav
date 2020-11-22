@@ -33,12 +33,12 @@ def control(data):
 	velocity = data.pid_vel
 	angle = servo_offset
 	error = 5*data.pid_error
-	print "Error Control",error
+	print ("Error Control",error)
 	if error!=0.0:
 		# if abs(error - prev_error)>0.5:
 		# 	integral = integral + error
 		control_error = kp*error + kd*(error - prev_error)# + ki*integral
-		print "Control", control_error
+		print ("Control", control_error)
 		# integral = integral/1.3
 
 		# print "Control error",control_error
@@ -63,7 +63,7 @@ def control(data):
 
 
 	# print "Velocity",velocity
-	print "Angle in Degrees",angle*180/np.pi # Just for reference
+	print ("Angle in Degrees",angle*180/np.pi) # Just for reference
 	msg = Twist()
 
 	# velocity = 1
@@ -87,8 +87,8 @@ def control(data):
 
 
 
-	print "Velocity",velocity
-	print "Angle",angle
+	print ("Velocity",velocity)
+	print ("Angle",angle)
 
 
 	msg.linear.x = velocity
