@@ -1,9 +1,11 @@
 #! /usr/bin/env python3
-import rospy
 import math
-from sensor_msgs.msg import LaserScan
-from f1tenth_simulator import PIDInput
+
 import numpy as np
+import rospy
+from f1tenth_simulator.msg import PIDInput
+from sensor_msgs.msg import LaserScan
+
 #import matplotlib.pyplot as plt
 
 angle_range = 270

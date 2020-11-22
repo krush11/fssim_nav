@@ -1,13 +1,14 @@
 #! /usr/bin/env python3
 
-import rospy
 import math
-import numpy as np
-import yaml
-import sys
-from sensor_msgs.msg import LaserScan
-from f1tenth_simulator import PIDInput
 import pdb
+import sys
+
+import numpy as np
+import rospy
+import yaml
+from f1tenth_simulator.msg import PIDInput
+from sensor_msgs.msg import LaserScan
 
 ANGLE_RANGE = 270  # Hokuyo 10LX has 270 degrees scan
 DESIRED_DISTANCE_RIGHT = 1.0  # 0.9 # meters

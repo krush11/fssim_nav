@@ -1,11 +1,12 @@
 #! /usr/bin/env python3
-import rospy
-from ackermann_msgs import AckermanDriverStamped, AckermanDriver
-from f1tenth_simulator import PIDInput
 import math
-import numpy as np
 
-pub = rospy.Publisher('nav', AckermanDriverStamped, queue_size=1)
+import numpy as np
+import rospy
+from ackermann_msgs.msg import AckermannDriveStamped
+from f1tenth_simulator.msg import PIDInput
+
+pub = rospy.Publisher('nav', AckermannDriveStamped, queue_size=1)
 
 kp = 10.
 kd = 0.01
@@ -74,11 +75,10 @@ def control(data):
 
     print("Velocity", velocity)
     print("Angle", angle)
-    msg = AckermanDriverStamped()
+    msg = AckermannDriveStamped()
     msg.header.stamp = rospy.Time.now()
     msg.header.frame_id = 'cmd_vel'
-    msg.linear.x = velocity
-    msg.angular.z = angle
+    msg.drive.speed = velocity
     pub.publish(msg)
 
 
