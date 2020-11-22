@@ -97,7 +97,7 @@ def control(data):
 
 def listener():
 	rospy.init_node('pid_controller', anonymous=True)
-	rospy.Subscriber('error', PIDInput, control)
+	rospy.Subscriber("error", PIDInput, control)
 	global kp
 	global ki
 	global kd
