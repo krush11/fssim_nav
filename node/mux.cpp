@@ -1,5 +1,4 @@
 #include <ros/ros.h>
-
 #include <ackermann_msgs/AckermannDriveStamped.h>
 #include <ackermann_msgs/AckermannDrive.h>
 #include <std_msgs/Bool.h>
@@ -21,6 +20,7 @@ private:
     // Listen for messages from joystick and keyboard
     ros::Subscriber joy_sub;
     ros::Subscriber key_sub;
+    ros::Subscriber nav_drive_sub;
 
     // Publish drive data to simulator/car
     ros::Publisher drive_pub;
@@ -122,6 +122,7 @@ public:
         n.getParam("nav_drive_topic", nav_drive_topic);
         n.getParam("nav_mux_idx", nav_mux_idx);
         add_channel(nav_drive_topic, drive_topic, nav_mux_idx);
+        nav_drive_sub = n.subscribe(nav_drive_topic, 1, &Mux::nav_callback, this);
 
         // ***Add a channel for a new planner here**
         // int new_mux_idx;
@@ -194,6 +195,14 @@ public:
 
             publish_to_drive(desired_velocity, desired_steer);
         }
+    }
+
+    void nav_callback(const ackermann_msgs::AckermannDriveStamped &msg)
+    {
+        double drive_velocity = msg.drive.speed;
+        double angle = msg.drive.steering_angle;
+
+        publish_to_drive(drive_velocity, angle);
     }
 
     void key_callback(const std_msgs::String & msg) {
