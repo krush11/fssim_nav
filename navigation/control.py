@@ -79,6 +79,7 @@ def control(data):
     msg.header.stamp = rospy.Time.now()
     msg.header.frame_id = 'cmd_vel'
     msg.drive.speed = velocity
+    msg.drive.steering_angle = angle
     pub.publish(msg)
 
 
