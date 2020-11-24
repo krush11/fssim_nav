@@ -62,16 +62,16 @@ def control(data):
     # # if angle > 20*np.pi/180 or angle < -20*np.pi/180:
     # # 	velocity = 0.3
 
-    if angle >= 10*np.pi/180 or angle <= -10*np.pi/180:
+    if angle >= 20*np.pi/180 or angle <= -20*np.pi/180:
         velocity = 0.8
-    if angle > 20*np.pi/180 or angle < -20*np.pi/180:
+    if angle > 40*np.pi/180 or angle < -40*np.pi/180:
         velocity = 0.3
     if angle >= -1*np.pi/180 and angle <= 1*np.pi/180:
-        velocity = 2.0
+        velocity = 1.0
     if velocity < 0:
         velocity = 1
     if velocity > 2.5:
-        velocity = 2.5
+        velocity = 2
 
     print("Velocity", velocity)
     print("Angle", angle)
@@ -79,7 +79,7 @@ def control(data):
     msg.header.stamp = rospy.Time.now()
     msg.header.frame_id = 'cmd_vel'
     msg.drive.speed = velocity
-    msg.drive.steering_angle = angle
+    msg.drive.steering_angle = angle*1.5
     pub.publish(msg)
 
 
