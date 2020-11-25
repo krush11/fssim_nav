@@ -7,8 +7,4 @@
   <node name = "heading_generator" pkg = "f1tenth_simulator" type = "control.py" >
     <rosparam command="load" file="$(find f1tenth_simulator)/params.yaml"/>
   </node>
-
-  <node name = "dist_finder" pkg = "f1tenth_simulator" type = "dist_finder.py" output = "screen">
-    <rosparam command="load" file="$(find f1tenth_simulator)/params.yaml"/>
-  </node>
 </launch>

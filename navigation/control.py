@@ -78,7 +78,7 @@ def control(data):
     msg = AckermannDriveStamped()
     msg.header.stamp = rospy.Time.now()
     msg.header.frame_id = 'cmd_vel'
-    msg.drive.speed = velocity
+    msg.drive.speed = velocity*3
     msg.drive.steering_angle = angle*1.5
     pub.publish(msg)
 
@@ -90,10 +90,6 @@ def listener():
     global ki
     global kd
     global vel_input
-    kp = input("Enter Kp Value: ")
-    ki = input("Enter Ki Value: ")
-    kd = input("Enter Kd Value: ")
-    vel_input = input("Enter Velocity: ")
     rospy.spin()
 
 
