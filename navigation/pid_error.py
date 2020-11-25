@@ -119,8 +119,9 @@ def callback(data):
     print(" ")
 
     # Does a left wall follow
-    error_left, curr_dist_left = followCenter(data)
-    error = error_left
+    error, curr_dist = followCenter(data)
+    # error, curr_dist = followRight(data, DESIRED_DISTANCE_RIGHT)
+    # error, curr_dist = followLeft(data, DESIRED_DISTANCE_LEFT)
     msg = PIDInput()
     msg.pid_error = error
     msg.pid_vel = VELOCITY
