@@ -19,6 +19,9 @@ prev_error = 0.0
 error = 0.0
 integral = 0.0
 vel_input = 1.0
+avg_vel = 0.0
+iteration = 0.0
+total = 0.0
 
 
 def control(data):
@@ -30,6 +33,9 @@ def control(data):
     global kd
     global kd_vel
     global kp_vel
+    global avg_vel
+    global iteration
+    global total
     velocity = data.pid_vel
     angle = servo_offset
     error = 5*data.pid_error
@@ -55,41 +61,39 @@ def control(data):
     if angle < -30*np.pi/180:
         angle = -30*np.pi/180
 
-    # print "Velocity",velocity
-    print("Angle in Degrees", angle*180/np.pi)  # Just for reference
-
-    # velocity = 1
-    # # if angle > 20*np.pi/180 or angle < -20*np.pi/180:
-    # # 	velocity = 0.3
-
-    if angle >= 20*np.pi/180 or angle <= -20*np.pi/180:
-        velocity = 0.8
-    if angle > 40*np.pi/180 or angle < -40*np.pi/180:
-        velocity = 0.3
-    if angle >= -1*np.pi/180 and angle <= 1*np.pi/180:
+    if angle > 20*np.pi/180 or angle < -20*np.pi/180:
         velocity = 1.0
+    if angle >= 10*np.pi/180 or angle <= -10*np.pi/180:
+        velocity = 1.5
+    if angle >= -1*np.pi/180 and angle <= 1*np.pi/180:
+        velocity = 2
     if velocity < 0:
         velocity = 1
     if velocity > 2.5:
         velocity = 2
 
+    velocity *= 1.75
+    angle /= 1.75
+
+    iteration+=1
+    total += velocity
+    avg_vel = total/iteration
+
     print("Velocity", velocity)
+    print("Average Velocity = ", avg_vel)
     print("Angle", angle)
+    # print("total = ", total)
     msg = AckermannDriveStamped()
     msg.header.stamp = rospy.Time.now()
     msg.header.frame_id = 'cmd_vel'
-    msg.drive.speed = velocity*3
-    msg.drive.steering_angle = angle*1.5
+    msg.drive.speed = velocity
+    msg.drive.steering_angle = angle
     pub.publish(msg)
 
 
 def listener():
     rospy.init_node('pid_controller', anonymous=True)
     rospy.Subscriber("error", PIDInput, control)
-    global kp
-    global ki
-    global kd
-    global vel_input
     rospy.spin()
 
 

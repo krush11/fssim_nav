@@ -11,12 +11,12 @@ from f1tenth_simulator.msg import PIDInput
 from sensor_msgs.msg import LaserScan
 
 ANGLE_RANGE = 270  # Hokuyo 10LX has 270 degrees scan
-DESIRED_DISTANCE_RIGHT = 1.0  # 0.9 # meters
-DESIRED_DISTANCE_LEFT = 0.8  # 0.55
+DESIRED_DISTANCE_RIGHT = 1  # 0.9 # meters
+DESIRED_DISTANCE_LEFT = 1  # 0.55
 VELOCITY = 1.00  # meters per second
 CAR_LENGTH = 0.50  # Traxxas Rally is 20 inches or 0.5 meters
 
-pub = rospy.Publisher('error', PIDInput, queue_size=10)
+pub = rospy.Publisher('error', PIDInput, queue_size=1)
 
 alpha = 0
 error = 0
@@ -48,15 +48,15 @@ def followRight(data, desired_trajectory):
     b = getRange(data, 0)
     swing = math.radians(60)
     alpha = math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-    print("a", "b", a, b)
-    print("Alpha right", math.degrees(alpha))
+    # print("a", "b", a, b)
+    # print("Alpha right", math.degrees(alpha))
     curr_dist = b*math.cos(alpha)
 
     future_dist = curr_dist + CAR_LENGTH * math.sin(alpha)
-    print("Right : ", future_dist)
+    # print("Right : ", future_dist)
     error = desired_trajectory - future_dist
 
-    print("Current Distance Right: ", curr_dist)
+    # print("Current Distance Right: ", curr_dist)
     return error, curr_dist
 
 
@@ -68,16 +68,16 @@ def followLeft(data, desired_trajectory):
     a = getRange(data, 120)
     b = getRange(data, 179.9)
     swing = math.radians(60)
-    print("a", "b", a, b)
+    # print("a", "b", a, b)
     alpha = -math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-    print("Alpha left", math.degrees(alpha))
+    # print("Alpha left", math.degrees(alpha))
     curr_dist = b*math.cos(alpha)
 
     future_dist = curr_dist - CAR_LENGTH * math.sin(alpha)
-    print("Left : ", future_dist)
+    # print("Left : ", future_dist)
     error = future_dist - desired_trajectory
 
-    print("Current Distance Left: ", curr_dist)
+    # print("Current Distance Left: ", curr_dist)
     return error, curr_dist
 
 
@@ -88,9 +88,9 @@ def followCenter(data):
     a = getRange(data, 120)
     b = getRange(data, 179.9)
     swing = math.radians(60)
-    print("center distances: ", a, b)
+    # print("center distances: ", a, b)
     alpha = -math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-    print("Alpha left", math.degrees(alpha))
+    # print("Alpha left", math.degrees(alpha))
     curr_dist1 = b*math.cos(alpha)
     future_dist1 = curr_dist1-CAR_LENGTH*math.sin(alpha)
 
@@ -98,15 +98,15 @@ def followCenter(data):
     b = getRange(data, 0)
     swing = math.radians(60)
     alpha = math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-    print("Alpha right", math.degrees(alpha))
+    # print("Alpha right", math.degrees(alpha))
     curr_dist2 = b*math.cos(alpha)
     future_dist2 = curr_dist2+CAR_LENGTH*math.sin(alpha)
 
-    print("dist 1 : ", future_dist1)
-    print("dist 2 : ", future_dist2)
+    # print("dist 1 : ", future_dist1)
+    # print("dist 2 : ", future_dist2)
 
     error = future_dist1 - future_dist2
-    print("Error : ", error)
+    # print("Error : ", error)
     return error, curr_dist2 - curr_dist1
 
 
@@ -119,7 +119,7 @@ def callback(data):
     print(" ")
 
     # Does a left wall follow
-    error_left, curr_dist_left = followLeft(data, DESIRED_DISTANCE_LEFT)
+    error_left, curr_dist_left = followCenter(data)
     error = error_left
     msg = PIDInput()
     msg.pid_error = error
