@@ -1,6 +1,6 @@
-#include "f1tenth_simulator/pose_2d.hpp"
-#include "f1tenth_simulator/scan_simulator_2d.hpp"
-#include "f1tenth_simulator/distance_transform.hpp"
+#include "fssim_nav/pose_2d.hpp"
+#include "fssim_nav/scan_simulator_2d.hpp"
+#include "fssim_nav/distance_transform.hpp"
 
 using namespace racecar_simulator;
 

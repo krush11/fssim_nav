@@ -2,7 +2,7 @@
 #include <vector>
 #include <cmath>
 
-#include "f1tenth_simulator/distance_transform.hpp"
+#include "fssim_nav/distance_transform.hpp"
 
 // Implementation based on the paper
 // Distance Transforms of Sampled Functions

@@ -7,7 +7,7 @@ import sys
 import numpy as np
 import rospy
 import yaml
-from f1tenth_simulator.msg import PIDInput
+from fssim_nav.msg import PIDInput
 from sensor_msgs.msg import LaserScan
 
 ANGLE_RANGE = 270  # Hokuyo 10LX has 270 degrees scan

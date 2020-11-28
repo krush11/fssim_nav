@@ -7,7 +7,7 @@
 #include <sensor_msgs/Joy.h>
 #include <std_msgs/String.h>
 
-#include "f1tenth_simulator/channel.h"
+#include "fssim_nav/channel.h"
 
 class Mux {
 private:

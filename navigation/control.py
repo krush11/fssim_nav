@@ -4,7 +4,7 @@ import math
 import numpy as np
 import rospy
 from ackermann_msgs.msg import AckermannDriveStamped
-from f1tenth_simulator.msg import PIDInput
+from fssim_nav.msg import PIDInput
 
 pub = rospy.Publisher('nav', AckermannDriveStamped, queue_size=1)
 
@@ -72,8 +72,8 @@ def control(data):
     if velocity > 2.5:
         velocity = 2
 
-    velocity *= 1.75
-    angle /= 1.75
+    velocity *= 3.5
+    angle /= 1.25
 
     iteration+=1
     total += velocity

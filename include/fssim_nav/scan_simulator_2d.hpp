@@ -2,7 +2,7 @@
 
 #include <random>
 
-#include "f1tenth_simulator/pose_2d.hpp"
+#include "fssim_nav/pose_2d.hpp"
 
 namespace racecar_simulator {
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>f1tenth_simulator</name>
+  <name>fssim_nav</name>
   <version>0.0.1</version>
   <description>A simulator of the F1TENTH racecar.</description>
 
