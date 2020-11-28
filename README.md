@@ -1,6 +1,7 @@
 # TDR-SDC's Software Stack
 
 Welcome to the TDR-SDC Formula Student navigation repo
+<br/>
 Skeleton code forked from [f1tenth_simulator](https://github.com/f1tenth/f1tenth_simulator)
 
 ## Bulding code
